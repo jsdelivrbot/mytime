@@ -9736,3 +9736,6 @@ a.button {
   flex-direction: column;
   justify-content: center;
   height: 100%; }
+
+.item-center {
+  text-align: center; }
