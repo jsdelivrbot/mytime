@@ -3,7 +3,30 @@ angular.module('starter.controllers', [])
 .controller('HomeController', function($scope, UserService) {
   $scope.user = UserService.getUser('facebook');
 })
-
+.controller('MenuController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('MyTimeController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('NoTimeController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('WhatTimeController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('FiveController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('FifteenController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('ThirtyController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('OneHourController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
 .controller('AuthController', function($scope, $state, $q, UserService, $ionicLoading) {
 
   // This is the success callback from the login method
