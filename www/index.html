@@ -11,9 +11,11 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+<script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
 
     <!-- Facebook integration 
     <script src="lib/facebook-connect-plugin/index.js"></script>-->
@@ -23,16 +25,17 @@
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="starter" ng-controller="LogoutCtrl">
     <ion-nav-bar class="bar-calm">
-      <ion-nav-buttons side="right">
-        <button class="button button-positive button-large" ng-click="doSomething()">
-          Menu
-        </button>
-      </ion-nav-buttons>
       <ion-nav-back-button side="left">
       </ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view></ion-nav-view>
+    <div class="bar bar-footer bar-calm">
+      <a href="#/menu" class="button button-positive">
+        Menu
+      </a>
+      <button class="button button-positive pull-right" ng-click="showLogOutMenu()">Logout</button>
+    </div>
   </body>
 </html>

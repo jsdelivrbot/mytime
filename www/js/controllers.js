@@ -27,7 +27,12 @@ angular.module('starter.controllers', [])
 .controller('OneHourController', function($scope, UserService) {
   $scope.user = UserService.getUser('facebook');
 })
-.controller('AuthController', function($scope, $state, $q, UserService, $ionicLoading) {
+.controller('AuthController', function($scope, $state, $q, UserService, $ionicLoading, $ionicModal) {
+  $ionicModal.fromTemplateUrl('templates/modal.html', {scope: $scope}).then(
+    function(modal) {
+      $scope.modal = modal;
+    }
+  );
 
   // This is the success callback from the login method
   var fbLoginSuccess = function(response) {
@@ -48,9 +53,10 @@ angular.module('starter.controllers', [])
         picture : "http://graph.facebook.com/" + authResponse.userID + "/picture?type=large"
       });
       $ionicLoading.hide();
-      $state.go('app.home');
+      $state.go('home');
     }, function(fail){
       // Fail get profile info
+      $scope.modal.show();
       console.log('profile info fail', fail);
     });
   };
@@ -58,6 +64,7 @@ angular.module('starter.controllers', [])
   // This is the fail callback from the login method
   var fbLoginError = function(error){
     console.log('fbLoginError', error);
+    $scope.modal.show();
     $ionicLoading.hide();
   };
 
@@ -80,6 +87,7 @@ angular.module('starter.controllers', [])
 
   $scope.facebookSignIn = function() {
     facebookConnectPlugin.getLoginStatus(function(success){
+
       if(success.status === 'connected'){
         // The user is logged in and has authenticated your app, and response.authResponse supplies
         // the user's ID, a valid access token, a signed request, and the time the access token
@@ -101,13 +109,13 @@ angular.module('starter.controllers', [])
               picture : "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
             });
 
-            $state.go('app.home');
+            $state.go('home');
           }, function(fail){
             // Fail get profile info
             console.log('profile info fail', fail);
           });
         }else{
-          $state.go('app.home');
+          $state.go('home');
         }
       } else {
         // If (success.status === 'not_authorized') the user is logged in to Facebook,
@@ -115,6 +123,7 @@ angular.module('starter.controllers', [])
         // Else the person is not logged into Facebook,
         // so we're not sure if they are logged into this app or not.
 
+        $scope.modal.show();
         console.log('getLoginStatus', success.status);
 
         $ionicLoading.show({
@@ -126,6 +135,35 @@ angular.module('starter.controllers', [])
         facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
       }
     });
-  };
+  }
+})
 
+.controller('LogoutCtrl', function($scope, UserService, $ionicActionSheet, $state, $ionicLoading){
+  $scope.user = UserService.getUser();
+
+  $scope.showLogOutMenu = function() {
+    var hideSheet = $ionicActionSheet.show({
+      destructiveText: 'Logout',
+      titleText: 'Are you sure you want to logout?',
+      cancelText: 'Cancel',
+      cancel: function() {},
+      buttonClicked: function(index) {
+        return true;
+      },
+      destructiveButtonClicked: function(){
+        $ionicLoading.show({
+          template: 'Logging out...'
+        });
+
+        // Facebook logout
+        facebookConnectPlugin.logout(function(){
+          $ionicLoading.hide();
+          $state.go('login');
+        },
+        function(fail){
+          $ionicLoading.hide();
+        });
+      }
+    });
+  };
 });

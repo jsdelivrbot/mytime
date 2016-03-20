@@ -3,9 +3,21 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform, $state) {
+.run(function($ionicPlatform, $rootScope, UserService, $state) {
+
+  // route all requests to login screen if necessary, i.e. no Particle API access token has been stored
+  $rootScope.$on('$stateChangeStart', function(e, toState) {
+    if ('login' !== toState.name) {
+      // get the access token for the particle API
+      var user = UserService.getUser('facebook');
+      if (!user.userID) {
+        e.preventDefault();
+        $state.go('login');
+      }
+    }
+  });
 
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
