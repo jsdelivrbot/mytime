@@ -1,26 +1,13 @@
 <ion-view view-title="Home">
   <ion-content class="padding">
   	
-  	<h1 style="text-align: center">
-  	Hello, Mary Margret!
+  	<h1 style="text-align: center; margin-top: 2em;">
+  	Hello, {{user.name}}!
   	</h1>
-
-  	<p>
-    
-
-
-  	<div class="row column-33">
-  	 <div class="col item">I spent my Time</div>
-  	 <div class="col item item item-text-wrap">What to do with my Time</div>
-	</div>
-
-
-
-
-
-
-    
-
-  	</p>
+    <p style="text-align: center;"><img ng-src="img/morgan.jpg" class="avatar" alt="{{user.name}}"></p>
+  	<div class="row column-33" style="width: 310px; margin: 0 auto;">
+      <a href="#" class="button button-balanced circle-button" ng-click="recordTimeSpent()">I Spent<br>My<br>Time</a>
+      <a href="#/whattime"class="button button-positive circle-button">What to do<br>with<br>My Time?</a>
+  	</div>
   </ion-content>
 </ion-view>

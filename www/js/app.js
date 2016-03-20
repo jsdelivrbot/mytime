@@ -97,6 +97,18 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     url: '/onehour',
     templateUrl: 'templates/onehour.html',
     controller: 'OneHourController'
+  })
+
+  .state('howspent', {
+    url: '/howspent',
+    templateUrl: 'templates/howspent.html',
+    controller: 'HowSpentController'
+  })
+
+  .state('theirtime', {
+    url: '/theirtime',
+    templateUrl: 'templates/theirtime.html',
+    controller: 'TheirTimeController'
   });
 
   $urlRouterProvider.otherwise('/home');

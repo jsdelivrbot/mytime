@@ -1,0 +1,16 @@
+<ion-modal-view view-title="My Time Spent">
+  <ion-content class="padding">
+  	<h2 style="text-align: center">How did you spend your time?</h2>
+  	<p>Select one of the activities below:</p>
+    <ion-list>
+      <ion-radio ng-model="time.spent" ng-value="gym">Went to the gym</ion-radio>
+      <ion-radio ng-model="time.spent" ng-value="reading">Read a chapter</ion-radio>
+      <ion-radio ng-model="time.spent" ng-value="tea">Drank tea</ion-radio>
+      <ion-radio ng-model="time.spent" ng-value="journal">Wrote in journal</ion-radio>
+      <ion-radio ng-model="time.spent" ng-value="coffee">Had coffee with a friend</ion-radio>
+      <ion-radio ng-model="time.spent" ng-value="clouds">Looked at clouds</ion-radio>
+      <ion-radio ng-model="time.spent" ng-value="other">Other...</ion-radio>
+    </ion-list>
+    <button class="button button-positive" ng-click="submitTimeSpent()">Submit</button>
+  </ion-content>
+</ion-modal-view>

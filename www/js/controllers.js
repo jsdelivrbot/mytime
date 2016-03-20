@@ -1,7 +1,21 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeController', function($scope, UserService) {
+.controller('HomeController', function($scope, UserService, $ionicModal, $state) {
   $scope.user = UserService.getUser('facebook');
+  $ionicModal.fromTemplateUrl('templates/howspent.html', {scope: $scope}).then(
+    function(modal) {
+      $scope.modal = modal;
+    }
+  );
+  $scope.time = {};
+  $scope.time.spent = "gym";
+  $scope.recordTimeSpent = function() {
+    $scope.modal.show();
+  };
+  $scope.submitTimeSpent = function() {
+    $scope.modal.hide();
+    $state.go('mytime');
+  }
 })
 .controller('MenuController', function($scope, UserService) {
   $scope.user = UserService.getUser('facebook');
@@ -9,10 +23,27 @@ angular.module('starter.controllers', [])
 .controller('MyTimeController', function($scope, UserService) {
   $scope.user = UserService.getUser('facebook');
 })
-.controller('NoTimeController', function($scope, UserService) {
+.controller('NoTimeController', function($scope, UserService, $ionicModal) {
   $scope.user = UserService.getUser('facebook');
+  $ionicModal.fromTemplateUrl('templates/call.html', {scope: $scope}).then(
+    function(modal) {
+      $scope.modal = modal;
+    }
+  );
+  $scope.callFriend = function() {
+    $scope.modal.show();
+  };
+  $scope.calledFriend = function() {
+    $scope.modal.hide();
+  }
 })
 .controller('WhatTimeController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('TheirTimeController', function($scope, UserService) {
+  $scope.user = UserService.getUser('facebook');
+})
+.controller('HowSpentController', function($scope, UserService) {
   $scope.user = UserService.getUser('facebook');
 })
 .controller('FiveController', function($scope, UserService) {
@@ -28,12 +59,6 @@ angular.module('starter.controllers', [])
   $scope.user = UserService.getUser('facebook');
 })
 .controller('AuthController', function($scope, $state, $q, UserService, $ionicLoading, $ionicModal) {
-  $ionicModal.fromTemplateUrl('templates/modal.html', {scope: $scope}).then(
-    function(modal) {
-      $scope.modal = modal;
-    }
-  );
-
   // This is the success callback from the login method
   var fbLoginSuccess = function(response) {
     if (!response.authResponse){
@@ -50,13 +75,12 @@ angular.module('starter.controllers', [])
         userID: profileInfo.id,
         name: profileInfo.name,
         email: profileInfo.email,
-        picture : "http://graph.facebook.com/" + authResponse.userID + "/picture?type=large"
+        picture : "http://graph.facebook.com/" + profileInfo.id + "/picture?type=large"
       });
       $ionicLoading.hide();
       $state.go('home');
     }, function(fail){
       // Fail get profile info
-      $scope.modal.show();
       console.log('profile info fail', fail);
     });
   };
@@ -64,7 +88,6 @@ angular.module('starter.controllers', [])
   // This is the fail callback from the login method
   var fbLoginError = function(error){
     console.log('fbLoginError', error);
-    $scope.modal.show();
     $ionicLoading.hide();
   };
 
@@ -106,7 +129,7 @@ angular.module('starter.controllers', [])
               userID: profileInfo.id,
               name: profileInfo.name,
               email: profileInfo.email,
-              picture : "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
+              picture : "http://graph.facebook.com/" + profileInfo.id + "/picture?type=large"
             });
 
             $state.go('home');
@@ -123,7 +146,6 @@ angular.module('starter.controllers', [])
         // Else the person is not logged into Facebook,
         // so we're not sure if they are logged into this app or not.
 
-        $scope.modal.show();
         console.log('getLoginStatus', success.status);
 
         $ionicLoading.show({
