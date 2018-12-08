@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "a0-angular-storage": "0.0.*",
-    "facebook-connect-plugin": "https://cdn.rawgit.com/Wizcorp/phonegap-facebook-plugin/master/facebookConnectPlugin.js"
+    "facebook-connect-plugin": "https://cdn.jsdelivr.net/gh/Wizcorp/phonegap-facebook-plugin/facebookConnectPlugin.js"
   },
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
